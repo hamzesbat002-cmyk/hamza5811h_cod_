@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeVision - محرر أكواد متقدم</title>
     <link rel="stylesheet" href="style.css">
-    <!-- أيقونات Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- خط Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -44,13 +42,9 @@
             <div class="left-controls">
                 <select id="languageSelect" class="dropdown">
                     <option value="javascript">JavaScript</option>
-                    <option value="typescript">TypeScript</option>
                     <option value="html">HTML</option>
                     <option value="css">CSS</option>
                     <option value="python">Python</option>
-                    <option value="java">Java</option>
-                    <option value="csharp">C#</option>
-                    <option value="cpp">C++</option>
                     <option value="php">PHP</option>
                 </select>
                 
@@ -174,14 +168,15 @@
         </footer>
     </div>
 
-    <!-- Monaco Editor من CDN -->
-    <script src="https://unpkg.com/monaco-editor@0.43.0/min/vs/loader.js"></script>
-    <!-- مكتبة لتنسيق الكود -->
+    <!-- Monaco Editor -->
+    <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+    
+    <!-- مكتبات تنسيق الكود -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script>
     
-    <!-- ملف الجافاسكريبت الرئيسي -->
+    <!-- ملف JavaScript الرئيسي -->
     <script src="script.js"></script>
 </body>
 </html>
