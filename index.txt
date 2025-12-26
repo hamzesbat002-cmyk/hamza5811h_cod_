@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeVision - محرر أكواد متقدم</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- خط Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- شريط العنوان -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <h1>CodeVision</h1>
+            </div>
+            <div class="header-actions">
+                <button id="newFileBtn" title="ملف جديد">
+                    <i class="fas fa-file"></i> جديد
+                </button>
+                <button id="saveBtn" title="حفظ">
+                    <i class="fas fa-save"></i> حفظ
+                </button>
+                <button id="runBtn" class="run-btn" title="تشغيل">
+                    <i class="fas fa-play"></i> تشغيل
+                </button>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fas fa-sun"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- منطقة التحكم -->
+        <div class="controls">
+            <div class="left-controls">
+                <select id="languageSelect" class="dropdown">
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
+                    <option value="cpp">C++</option>
+                    <option value="php">PHP</option>
+                </select>
+                
+                <button id="formatBtn" class="icon-btn" title="تنسيق الكود">
+                    <i class="fas fa-indent"></i> تنسيق
+                </button>
+                
+                <button id="undoBtn" class="icon-btn" title="تراجع">
+                    <i class="fas fa-undo"></i>
+                </button>
+                
+                <button id="redoBtn" class="icon-btn" title="إعادة">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+            
+            <div class="right-controls">
+                <div class="file-info">
+                    <span id="fileName">main.js</span>
+                    <span class="language-badge" id="languageBadge">JS</span>
+                </div>
+                
+                <button id="fullscreenBtn" class="icon-btn" title="شاشة كاملة">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- منطقة العمل الرئيسية -->
+        <div class="main-area">
+            <!-- المحرر -->
+            <div class="editor-section">
+                <div class="section-header">
+                    <i class="fas fa-edit"></i>
+                    <h3>المحرر</h3>
+                </div>
+                <div id="editorContainer" class="editor-container"></div>
+            </div>
+
+            <!-- المعاينة/المخرجات -->
+            <div class="output-section">
+                <div class="tabs">
+                    <button class="tab active" data-tab="preview">
+                        <i class="fas fa-eye"></i> معاينة
+                    </button>
+                    <button class="tab" data-tab="console">
+                        <i class="fas fa-terminal"></i> وحدة التحكم
+                    </button>
+                    <button class="tab" data-tab="files">
+                        <i class="fas fa-folder"></i> الملفات
+                    </button>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- معاينة HTML -->
+                    <div id="previewTab" class="tab-pane active">
+                        <div class="preview-controls">
+                            <button id="refreshPreview" class="icon-btn small">
+                                <i class="fas fa-sync-alt"></i> تحديث
+                            </button>
+                            <span>المعاينة الحية</span>
+                        </div>
+                        <iframe id="previewFrame" class="preview-frame"></iframe>
+                    </div>
+                    
+                    <!-- وحدة التحكم -->
+                    <div id="consoleTab" class="tab-pane">
+                        <div class="console-controls">
+                            <button id="clearConsole" class="icon-btn small">
+                                <i class="fas fa-trash"></i> مسح
+                            </button>
+                            <button id="copyConsole" class="icon-btn small">
+                                <i class="fas fa-copy"></i> نسخ
+                            </button>
+                        </div>
+                        <pre id="consoleOutput" class="console-output"></pre>
+                    </div>
+                    
+                    <!-- إدارة الملفات -->
+                    <div id="filesTab" class="tab-pane">
+                        <div class="files-controls">
+                            <button id="addFileBtn" class="icon-btn small">
+                                <i class="fas fa-plus"></i> ملف جديد
+                            </button>
+                            <button id="addFolderBtn" class="icon-btn small">
+                                <i class="fas fa-folder-plus"></i> مجلد
+                            </button>
+                        </div>
+                        <div id="fileTree" class="file-tree">
+                            <div class="file-item active" data-file="main.js">
+                                <i class="fas fa-file-code"></i>
+                                <span>main.js</span>
+                            </div>
+                            <div class="file-item" data-file="index.html">
+                                <i class="fas fa-file-code"></i>
+                                <span>index.html</span>
+                            </div>
+                            <div class="file-item" data-file="style.css">
+                                <i class="fas fa-file-code"></i>
+                                <span>style.css</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط الحالة -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span id="cursorPosition">السطر 1، العمود 1</span>
+                <span id="fileSize">0 حرف</span>
+            </div>
+            <div class="status-right">
+                <span id="lineCount">1 سطر</span>
+                <span id="encoding">UTF-8</span>
+                <span class="status-indicator" id="statusIndicator">
+                    <i class="fas fa-circle"></i> جاهز
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Monaco Editor من CDN -->
+    <script src="https://unpkg.com/monaco-editor@0.43.0/min/vs/loader.js"></script>
+    <!-- مكتبة لتنسيق الكود -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script>
+    
+    <!-- ملف الجافاسكريبت الرئيسي -->
+    <script src="script.js"></script>
+</body>
+</html>
