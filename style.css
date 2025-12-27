@@ -1,538 +1,314 @@
-/* أنماط CodeVision */
-:root {
-    --primary: #007acc;
-    --primary-dark: #005a9e;
-    --secondary: #2d2d30;
-    --background: #1e1e1e;
-    --surface: #252526;
-    --surface-light: #2d2d30;
-    --text: #cccccc;
-    --text-secondary: #858585;
-    --border: #3e3e42;
-    --success: #4ec9b0;
-    --warning: #ffcc00;
-    --error: #f44747;
-    --font-primary: 'Cairo', sans-serif;
-    --font-code: 'Source Code Pro', monospace;
-}
-
-[data-theme="light"] {
-    --primary: #007acc;
-    --primary-dark: #005a9e;
-    --secondary: #f3f3f3;
-    --background: #ffffff;
-    --surface: #f5f5f5;
-    --surface-light: #fafafa;
-    --text: #333333;
-    --text-secondary: #666666;
-    --border: #dddddd;
-    --success: #22863a;
-    --warning: #d19a00;
-    --error: #cb2431;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-primary);
-    background: var(--background);
-    color: var(--text);
-    height: 100vh;
-    overflow: hidden;
-    direction: rtl;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 100vw;
-}
-
-/* شريط العنوان */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 60px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.5rem;
-}
-
-.logo i {
-    color: var(--primary);
-    font-size: 1.8rem;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-button {
-    background: var(--surface-light);
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: var(--font-primary);
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-button:hover {
-    background: var(--secondary);
-    transform: translateY(-1px);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-.run-btn {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary-dark);
-}
-
-.run-btn:hover {
-    background: var(--primary-dark);
-}
-
-.theme-toggle {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-right: 15px;
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--surface-light);
-    transition: .4s;
-    border-radius: 24px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: var(--primary);
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-/* منطقة التحكم */
-.controls {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-}
-
-.left-controls, .right-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.dropdown {
-    background: var(--surface-light);
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 8px 12px;
-    border-radius: 4px;
-    min-width: 140px;
-    font-family: var(--font-primary);
-    cursor: pointer;
-}
-
-.icon-btn {
-    padding: 8px 12px;
-}
-
-.icon-btn.small {
-    padding: 4px 8px;
-    font-size: 0.8rem;
-}
-
-.file-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 10px;
-    background: var(--surface-light);
-    border-radius: 4px;
-}
-
-.language-badge {
-    background: var(--primary);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-/* المنطقة الرئيسية */
-.main-area {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-}
-
-.editor-section, .output-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding: 15px;
-}
-
-.editor-section {
-    border-left: 1px solid var(--border);
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-}
-
-.editor-container {
-    flex: 1;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    background: white;
-}
-
-/* التبويبات */
-.tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 10px;
-}
-
-.tab {
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    border-radius: 0;
-    padding: 10px 20px;
-    color: var(--text-secondary);
-    cursor: pointer;
-}
-
-.tab.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-    background: var(--surface);
-}
-
-.tab-content {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-}
-
-.tab-pane {
-    display: none;
-    height: 100%;
-    flex-direction: column;
-}
-
-.tab-pane.active {
-    display: flex;
-}
-
-/* المعاينة */
-.preview-controls, .console-controls, .files-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 10px;
-}
-
-.preview-frame {
-    flex: 1;
-    border: none;
-    border-radius: 4px;
-    background: white;
-    width: 100%;
-}
-
-/* وحدة التحكم */
-.console-output {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 15px;
-    overflow-y: auto;
-    font-family: var(--font-code);
-    font-size: 0.9rem;
-    white-space: pre-wrap;
-    line-height: 1.5;
-}
-
-/* أنماط رسائل وحدة التحكم */
-.console-log {
-    color: var(--text);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.console-info {
-    color: var(--success);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.console-success {
-    color: var(--success);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.console-warning {
-    color: var(--warning);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.console-error {
-    color: var(--error);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.timestamp {
-    color: var(--text-secondary);
-    font-size: 0.8em;
-    margin-left: 10px;
-}
-
-/* شجرة الملفات */
-.file-tree {
-    flex: 1;
-    overflow-y: auto;
-}
-
-.file-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.2s;
-}
-
-.file-item:hover {
-    background: var(--surface-light);
-}
-
-.file-item.active {
-    background: var(--primary);
-    color: white;
-}
-
-/* شريط الحالة */
-.status-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 20px;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-}
-
-.status-left, .status-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.status-indicator {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.status-indicator i {
-    color: var(--success);
-    font-size: 0.6rem;
-}
-
-.status-text {
-    margin-right: 5px;
-}
-
-/* تفاعلات المحرر */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
-
-.running {
-    animation: pulse 1s infinite;
-}
-
-/* إشعارات */
-.notification {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 12px 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 1000;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translate(-50%, -100%);
-        opacity: 0;
-    }
-    to {
-        transform: translate(-50%, 0);
-        opacity: 1;
-    }
-}
-
-/* التكيف مع الأجهزة المحمولة */
-@media (max-width: 768px) {
-    .main-area {
-        flex-direction: column;
-    }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرر الأكواد الاحترافي | CodeMaster Pro</title>
     
-    .editor-section {
-        border-left: none;
-        border-bottom: 1px solid var(--border);
-        flex: 1;
-    }
+    <!-- مكتبات خارجية -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
     
-    .output-section {
-        flex: 1;
-    }
+    <!-- ملفات محلية -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- تطبيق CodeMaster Pro -->
+    <div class="app-container">
+        
+        <!-- الشريط الجانبي -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-code"></i> CodeMaster Pro</h2>
+                <p class="developer">المطور: حمزة</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" id="editor-tab">
+                    <i class="fas fa-edit"></i>
+                    <span>المحرر</span>
+                </a>
+                <a href="#" class="nav-item" id="settings-tab">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+                <a href="#" class="nav-item" id="help-tab">
+                    <i class="fas fa-question-circle"></i>
+                    <span>المساعدة</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>الإصدار 2.0.0</p>
+                <p>تم التطوير بواسطة حمزة © 2023</p>
+            </div>
+        </div>
+        
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            
+            <!-- الهيدر -->
+            <header class="header">
+                <div class="logo">
+                    <i class="fas fa-code logo-icon"></i>
+                    <h1 class="logo-text">CodeMaster Pro</h1>
+                </div>
+                
+                <div class="header-controls">
+                    <button class="toolbar-btn" id="toggle-sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="toolbar-btn" id="run-code">
+                        <i class="fas fa-play"></i>
+                        <span>تشغيل الكود</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- شريط الأدوات -->
+            <div class="toolbar">
+                <button class="toolbar-btn" id="save-code">
+                    <i class="fas fa-save"></i>
+                    <span>حفظ</span>
+                </button>
+                <button class="toolbar-btn" id="format-code">
+                    <i class="fas fa-indent"></i>
+                    <span>تنسيق</span>
+                </button>
+                <button class="toolbar-btn reset" id="reset-code">
+                    <i class="fas fa-redo"></i>
+                    <span>إعادة تعيين</span>
+                </button>
+                <button class="toolbar-btn" id="toggle-preview">
+                    <i class="fas fa-eye"></i>
+                    <span>المعاينة</span>
+                </button>
+            </div>
+            
+            <!-- منطقة المحرر -->
+            <div class="editor-area">
+                
+                <!-- محرر الكود -->
+                <div class="code-editor-container" id="editor-container">
+                    <div class="editor-header">
+                        <div class="editor-title">
+                            <i class="fab fa-html5 editor-icon html-icon"></i>
+                            <h3>index.html</h3>
+                        </div>
+                        <div class="editor-actions">
+                            <button class="editor-action-btn" title="تكبير النص" id="zoom-in">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="editor-action-btn" title="تصغير النص" id="zoom-out">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="editor-wrapper">
+                        <textarea id="html-editor-textarea"><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي الاحترافي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            padding: 25px 40px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #2d3748;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">موقعي الاحترافي</div>
+        </header>
+        
+        <main class="main-content">
+            <section class="hero">
+                <h1>مرحباً بك في موقعي</h1>
+                <p>هذا موقع ويب تم إنشاؤه باستخدام محرر CodeMaster Pro</p>
+                <button class="btn" onclick="showMessage()">جرب التفاعل</button>
+            </section>
+            
+            <section class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>سريع</h3>
+                    <p>أداء عالي وسرعة في التحميل</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>متجاوب</h3>
+                    <p>يعمل على جميع الأجهزة</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>آمن</h3>
+                    <p>حماية وأمان للبيانات</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <p>تم التطوير باستخدام CodeMaster Pro &copy; 2023</p>
+            <p>المطور: حمزة</p>
+        </footer>
+    </div>
     
-    .header-actions button span {
-        display: none;
-    }
+    <script>
+        function showMessage() {
+            alert('مرحباً! هذا تفاعل من JavaScript');
+            console.log('تم النقر على الزر');
+        }
+        
+        console.log('تم تحميل الموقع بنجاح');
+    </script>
+</body>
+</html></textarea>
+                    </div>
+                    
+                    <!-- لوحة الإحصائيات -->
+                    <div class="stats-panel">
+                        <div class="stat-item">
+                            <i class="fas fa-font"></i>
+                            <span>الأحرف: <span id="char-count">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-code"></i>
+                            <span>الأسطر: <span id="line-count">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span>آخر تحديث: <span id="last-update">الآن</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- لوحة المعاينة -->
+                <div class="preview-panel" id="preview-panel">
+                    <div class="preview-header">
+                        <div class="preview-title">
+                            <i class="fas fa-eye preview-icon"></i>
+                            <h3>المعاينة المباشرة</h3>
+                        </div>
+                        <button class="toolbar-btn" id="refresh-preview">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>تحديث</span>
+                        </button>
+                    </div>
+                    <div class="preview-wrapper">
+                        <iframe id="preview-frame"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    .header-actions button {
-        padding: 8px;
-    }
+    <!-- مكتبات JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
     
-    .controls {
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px;
-    }
-    
-    .left-controls, .right-controls {
-        width: 100%;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-    
-    .tab {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .status-bar {
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px;
-    }
-    
-    .status-left, .status-right {
-        width: 100%;
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        padding: 0 10px;
-    }
-    
-    .logo h1 {
-        font-size: 1.2rem;
-    }
-    
-    .theme-toggle {
-        margin-right: 5px;
-    }
-    
-    .switch {
-        width: 40px;
-        height: 20px;
-    }
-    
-    .slider:before {
-        height: 12px;
-        width: 12px;
-    }
-}
+    <!-- ملف JavaScript المحلي -->
+    <script src="script.js"></script>
+</body>
+</html>

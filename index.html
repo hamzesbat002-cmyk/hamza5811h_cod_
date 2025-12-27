@@ -3,180 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeVision - محرر أكواد متقدم</title>
-    <link rel="stylesheet" href="style.css">
+    <title>محرر الأكواد الاحترافي | CodeMaster Pro</title>
+    
+    <!-- مكتبات خارجية -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    
+    <!-- ملفات محلية -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- شريط العنوان -->
-        <header class="header">
-            <div class="logo">
-                <i class="fas fa-code"></i>
-                <h1>CodeVision</h1>
+    <!-- تطبيق CodeMaster Pro -->
+    <div class="app-container">
+        
+        <!-- الشريط الجانبي -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-code"></i> CodeMaster Pro</h2>
+                <p class="developer">المطور: حمزة</p>
             </div>
-            <div class="header-actions">
-                <button id="newFileBtn" title="ملف جديد">
-                    <i class="fas fa-file"></i> جديد
-                </button>
-                <button id="saveBtn" title="حفظ">
-                    <i class="fas fa-save"></i> حفظ
-                </button>
-                <button id="runBtn" class="run-btn" title="تشغيل">
-                    <i class="fas fa-play"></i> تشغيل
-                </button>
-                <div class="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                    <label class="switch">
-                        <input type="checkbox" id="themeToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <i class="fas fa-sun"></i>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" id="editor-tab">
+                    <i class="fas fa-edit"></i>
+                    <span>المحرر</span>
+                </a>
+                <a href="#" class="nav-item" id="settings-tab">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+                <a href="#" class="nav-item" id="help-tab">
+                    <i class="fas fa-question-circle"></i>
+                    <span>المساعدة</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>الإصدار 2.0.0</p>
+                <p>تم التطوير بواسطة حمزة © 2023</p>
+            </div>
+        </div>
+        
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            
+            <!-- الهيدر -->
+            <header class="header">
+                <div class="logo">
+                    <i class="fas fa-code logo-icon"></i>
+                    <h1 class="logo-text">CodeMaster Pro</h1>
                 </div>
-            </div>
-        </header>
-
-        <!-- منطقة التحكم -->
-        <div class="controls">
-            <div class="left-controls">
-                <select id="languageSelect" class="dropdown">
-                    <option value="javascript">JavaScript</option>
-                    <option value="html">HTML</option>
-                    <option value="css">CSS</option>
-                    <option value="python">Python</option>
-                    <option value="php">PHP</option>
-                </select>
                 
-                <button id="formatBtn" class="icon-btn" title="تنسيق الكود">
-                    <i class="fas fa-indent"></i> تنسيق
+                <div class="header-controls">
+                    <button class="toolbar-btn" id="toggle-sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="toolbar-btn" id="run-code">
+                        <i class="fas fa-play"></i>
+                        <span>تشغيل الكود</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- شريط الأدوات -->
+            <div class="toolbar">
+                <button class="toolbar-btn" id="save-code">
+                    <i class="fas fa-save"></i>
+                    <span>حفظ</span>
                 </button>
-                
-                <button id="undoBtn" class="icon-btn" title="تراجع">
-                    <i class="fas fa-undo"></i>
+                <button class="toolbar-btn" id="format-code">
+                    <i class="fas fa-indent"></i>
+                    <span>تنسيق</span>
                 </button>
-                
-                <button id="redoBtn" class="icon-btn" title="إعادة">
+                <button class="toolbar-btn reset" id="reset-code">
                     <i class="fas fa-redo"></i>
+                    <span>إعادة تعيين</span>
+                </button>
+                <button class="toolbar-btn" id="toggle-preview">
+                    <i class="fas fa-eye"></i>
+                    <span>المعاينة</span>
                 </button>
             </div>
             
-            <div class="right-controls">
-                <div class="file-info">
-                    <span id="fileName">main.js</span>
-                    <span class="language-badge" id="languageBadge">JS</span>
-                </div>
+            <!-- منطقة المحرر -->
+            <div class="editor-area">
                 
-                <button id="fullscreenBtn" class="icon-btn" title="شاشة كاملة">
-                    <i class="fas fa-expand"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- منطقة العمل الرئيسية -->
-        <div class="main-area">
-            <!-- المحرر -->
-            <div class="editor-section">
-                <div class="section-header">
-                    <i class="fas fa-edit"></i>
-                    <h3>المحرر</h3>
-                </div>
-                <div id="editorContainer" class="editor-container"></div>
-            </div>
-
-            <!-- المعاينة/المخرجات -->
-            <div class="output-section">
-                <div class="tabs">
-                    <button class="tab active" data-tab="preview">
-                        <i class="fas fa-eye"></i> معاينة
-                    </button>
-                    <button class="tab" data-tab="console">
-                        <i class="fas fa-terminal"></i> وحدة التحكم
-                    </button>
-                    <button class="tab" data-tab="files">
-                        <i class="fas fa-folder"></i> الملفات
-                    </button>
-                </div>
-                
-                <div class="tab-content">
-                    <!-- معاينة HTML -->
-                    <div id="previewTab" class="tab-pane active">
-                        <div class="preview-controls">
-                            <button id="refreshPreview" class="icon-btn small">
-                                <i class="fas fa-sync-alt"></i> تحديث
-                            </button>
-                            <span>المعاينة الحية</span>
+                <!-- محرر الكود -->
+                <div class="code-editor-container" id="editor-container">
+                    <div class="editor-header">
+                        <div class="editor-title">
+                            <i class="fab fa-html5 editor-icon html-icon"></i>
+                            <h3>index.html</h3>
                         </div>
-                        <iframe id="previewFrame" class="preview-frame"></iframe>
-                    </div>
-                    
-                    <!-- وحدة التحكم -->
-                    <div id="consoleTab" class="tab-pane">
-                        <div class="console-controls">
-                            <button id="clearConsole" class="icon-btn small">
-                                <i class="fas fa-trash"></i> مسح
+                        <div class="editor-actions">
+                            <button class="editor-action-btn" title="تكبير النص" id="zoom-in">
+                                <i class="fas fa-search-plus"></i>
                             </button>
-                            <button id="copyConsole" class="icon-btn small">
-                                <i class="fas fa-copy"></i> نسخ
+                            <button class="editor-action-btn" title="تصغير النص" id="zoom-out">
+                                <i class="fas fa-search-minus"></i>
                             </button>
-                        </div>
-                        <pre id="consoleOutput" class="console-output"></pre>
-                    </div>
-                    
-                    <!-- إدارة الملفات -->
-                    <div id="filesTab" class="tab-pane">
-                        <div class="files-controls">
-                            <button id="addFileBtn" class="icon-btn small">
-                                <i class="fas fa-plus"></i> ملف جديد
-                            </button>
-                            <button id="addFolderBtn" class="icon-btn small">
-                                <i class="fas fa-folder-plus"></i> مجلد
-                            </button>
-                        </div>
-                        <div id="fileTree" class="file-tree">
-                            <div class="file-item active" data-file="main.js">
-                                <i class="fas fa-file-code"></i>
-                                <span>main.js</span>
-                            </div>
-                            <div class="file-item" data-file="index.html">
-                                <i class="fas fa-file-code"></i>
-                                <span>index.html</span>
-                            </div>
-                            <div class="file-item" data-file="style.css">
-                                <i class="fas fa-file-code"></i>
-                                <span>style.css</span>
-                            </div>
                         </div>
                     </div>
+                    <div class="editor-wrapper">
+                        <textarea id="html-editor-textarea"><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي الاحترافي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            padding: 25px 40px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #2d3748;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">موقعي الاحترافي</div>
+        </header>
+        
+        <main class="main-content">
+            <section class="hero">
+                <h1>مرحباً بك في موقعي</h1>
+                <p>هذا موقع ويب تم إنشاؤه باستخدام محرر CodeMaster Pro</p>
+                <button class="btn" onclick="showMessage()">جرب التفاعل</button>
+            </section>
+            
+            <section class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>سريع</h3>
+                    <p>أداء عالي وسرعة في التحميل</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- شريط الحالة -->
-        <footer class="status-bar">
-            <div class="status-left">
-                <span id="cursorPosition">السطر 1، العمود 1</span>
-                <span id="fileSize">0 حرف</span>
-            </div>
-            <div class="status-right">
-                <span id="lineCount">1 سطر</span>
-                <span id="encoding">UTF-8</span>
-                <span class="status-indicator" id="statusIndicator">
-                    <i class="fas fa-circle"></i> جاهز
-                </span>
-            </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>متجاوب</h3>
+                    <p>يعمل على جميع الأجهزة</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>آمن</h3>
+                    <p>حماية وأمان للبيانات</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <p>تم التطوير باستخدام CodeMaster Pro &copy; 2023</p>
+            <p>المطور: حمزة</p>
         </footer>
     </div>
-
-    <!-- Monaco Editor -->
-    <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
     
-    <!-- مكتبات تنسيق الكود -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script>
+    <script>
+        function showMessage() {
+            alert('مرحباً! هذا تفاعل من JavaScript');
+            console.log('تم النقر على الزر');
+        }
+        
+        console.log('تم تحميل الموقع بنجاح');
+    </script>
+</body>
+</html></textarea>
+                    </div>
+                    
+                    <!-- لوحة الإحصائيات -->
+                    <div class="stats-panel">
+                        <div class="stat-item">
+                            <i class="fas fa-font"></i>
+                            <span>الأحرف: <span id="char-count">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-code"></i>
+                            <span>الأسطر: <span id="line-count">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span>آخر تحديث: <span id="last-update">الآن</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- لوحة المعاينة -->
+                <div class="preview-panel" id="preview-panel">
+                    <div class="preview-header">
+                        <div class="preview-title">
+                            <i class="fas fa-eye preview-icon"></i>
+                            <h3>المعاينة المباشرة</h3>
+                        </div>
+                        <button class="toolbar-btn" id="refresh-preview">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>تحديث</span>
+                        </button>
+                    </div>
+                    <div class="preview-wrapper">
+                        <iframe id="preview-frame"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    <!-- ملف JavaScript الرئيسي -->
+    <!-- مكتبات JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
+    
+    <!-- ملف JavaScript المحلي -->
     <script src="script.js"></script>
 </body>
 </html>
